@@ -2,5 +2,6 @@
 
 React, Tailwind, Node ... etc
 
-''' Javascript
-console.log('Hello WOrld');
+```js
+console.log("Hello WOrld");
+```
