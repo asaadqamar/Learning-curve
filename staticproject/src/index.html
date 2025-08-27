@@ -5,7 +5,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="./output.css" rel="stylesheet" />
   </head>
-  <body>
-    <h1 class="text-5xl font-bold underline text-center">Hello world!</h1>
+  <body class="bg-black text-white">
+    <div
+      class="w-full h-screen flex flex-col justify-center content-center flex-wrap"
+    >
+      <div class="w-lg bg-gray-800 px-6 py-10 rounded-4xl">
+        <h2 class="text-3xl text-center mb-5 font-bold">Become a Partner</h2>
+        <form class="flex flex-col gap-3 text-lg">
+          <div class="flex flex-col">
+            <label for="name">Name</label>
+            <input
+              class="placeholder-gray-100 bg-gray-600 border-1 border-gray-400 px-3 py-2 rounded-sm focus:outline-none focus:border-blue-500"
+              type="text"
+              name="name"
+              id="name"
+              placeholder="e.g: Asaad Qamar"
+            />
+          </div>
+          <div class="flex flex-col">
+            <label for="emai">Email</label>
+            <input
+              class="placeholder-gray-100 bg-gray-600 border-1 border-gray-400 px-3 py-2 rounded-sm focus:outline-none focus:border-blue-500"
+              type="email"
+              name="email"
+              id="email"
+              placeholder="e.g:partner@tripshepherd.com"
+            />
+          </div>
+          <div class="flex flex-col">
+            <label for="password">Password</label>
+            <input
+              class="placeholder-gray-100 bg-gray-600 border-1 border-gray-400 px-3 py-2 rounded-sm focus:outline-none focus:border-blue-500"
+              type="password"
+              name="password"
+              id="password"
+              placeholder="*******"
+            />
+          </div>
+          <input
+            class="bg-blue-600 text-white text-2xl p-2 w-full rounded-sm cursor-pointer hover:bg-blue-700"
+            type="submit"
+            value="Submit"
+          />
+        </form>
+      </div>
+    </div>
   </body>
 </html>
