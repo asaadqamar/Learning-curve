@@ -198,6 +198,9 @@
   }
 }
 @layer utilities {
+  .mx-1 {
+    margin-inline: calc(var(--spacing) * 1);
+  }
   .mb-5 {
     margin-bottom: calc(var(--spacing) * 5);
   }
@@ -234,6 +237,9 @@
   .w-2\.5 {
     width: calc(var(--spacing) * 2.5);
   }
+  .w-2\/3 {
+    width: calc(2/3 * 100%);
+  }
   .w-2xl {
     width: var(--container-2xl);
   }
@@ -248,6 +254,9 @@
   }
   .w-10 {
     width: calc(var(--spacing) * 10);
+  }
+  .w-10\/12 {
+    width: calc(10/12 * 100%);
   }
   .w-20 {
     width: calc(var(--spacing) * 20);
@@ -515,6 +524,11 @@
     &:focus {
       --tw-outline-style: none;
       outline-style: none;
+    }
+  }
+  .sm\:w-lg {
+    @media (width >= 40rem) {
+      width: var(--container-lg);
     }
   }
 }
