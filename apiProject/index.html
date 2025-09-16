@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>API Call Project</title>
+  </head>
+  <body>
+    <div class="weather-box">
+      <h2>Weather Checker</h2>
+      <div class="input-group">
+        <input
+          type="text"
+          id="city-input"
+          placeholder="Enter city name"
+          value=""
+        />
+        <button id="check-weather">Check</button>
+      </div>
+      <p class="errorMessage"></p>
+
+      <div class="weather-result" id="weather-result">
+        <div class="fetching hidden">Fetching Date.....</div>
+        <!-- API response will be shown here -->
+        <div class="resultBox hidden">
+          <div>City: <span class="city"></span></div>
+          <div>Temprature: <span class="temprature"></span></div>
+          <div>wind: <span class="wind"></span></div>
+        </div>
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
