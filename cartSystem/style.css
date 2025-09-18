@@ -17,6 +17,16 @@ h1 {
   margin: auto;
 }
 
+.product-item {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: space-between;
+  align-items: center;
+  margin: 10px 0px;
+}
+
 .products,
 .cart {
   background: #fff;
@@ -80,4 +90,8 @@ button:hover {
 
 .checkout-btn:hover {
   background-color: #0069d9;
+}
+
+.hidden {
+  display: none;
 }
