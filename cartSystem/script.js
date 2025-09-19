@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const productsList = document.querySelector(".products-list");
   const cartList = document.querySelector(".cart-list");
   const emptyCart = document.querySelector(".empty-text");
+  const checkout = document.querySelector(".checkout");
 
   const products = [
     { id: 1, name: "Niagara Fall's Tours", time: "5 hours", price: 79.99 },
@@ -10,6 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
   ];
 
   const cart = [];
+  let allPrices = [];
 
   function showProducts() {
     if (!products || products.length === 0) return;
@@ -37,21 +39,52 @@ document.addEventListener("DOMContentLoaded", () => {
   function addToCart(product) {
     emptyCart.classList.add("hidden");
     cart.push(product);
-    const cartItem = document.createElement("div");
-    cartItem.classList.add("cart-item");
-    cartItem.innerHTML = `<span class="cart-item-title">${product.name}</span>
+
+    // add pricing
+    const price = product.price.toFixed(2);
+    allPrices.push(price);
+
+    // render cart
+    renderCart();
+  }
+
+  function renderCart() {
+    cartList.innerHTML = ""; // Clear cart first
+    checkout.classList.remove("hidden");
+    checkout.innerHTML = "";
+
+    cart.forEach((product, index) => {
+      const cartItem = document.createElement("div");
+      cartItem.classList.add("cart-item");
+      cartItem.innerHTML = `<span class="cart-item-title">${product.name}</span>
             <span class="price">$${product.price}</span>
-            <button data-id="${product.id}">Remove</button>`;
-    cartList.appendChild(cartItem);
+            <button data-index="${index}">Remove</button>`;
+      cartList.appendChild(cartItem);
+    });
+
+    let totalPrice = 0;
+    for (let index = 0; index < allPrices.length; index++) {
+      const price = allPrices[index];
+      totalPrice += Number(price);
+    }
+
+    checkout.innerHTML = `<span class="totalPrice">$${totalPrice.toFixed(
+      2
+    )}</span>
+        <button class="checkoutBtn">Checkout</button>`;
   }
 
   cartList.addEventListener("click", (e) => {
     if (e.target.tagName === "BUTTON") {
-      const removeItem = parseInt(e.target.getAttribute("data-id"));
-      const product = cart.find((p) => p.id === removeItem);
-      cart.splice(product, 1);
+      const index = parseInt(e.target.dataset.index);
+      cart.splice(index, 1);
+      allPrices.splice(index, 1);
+      renderCart();
 
-      console.log(cart);
+      if (cart.length === 0) {
+        emptyCart.classList.remove("hidden");
+        checkout.innerHTML = "";
+      }
     }
   });
 });
