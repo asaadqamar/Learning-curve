@@ -3,15 +3,24 @@ document.addEventListener("DOMContentLoaded", () => {
   const cartList = document.querySelector(".cart-list");
   const emptyCart = document.querySelector(".empty-text");
   const checkout = document.querySelector(".checkout");
-
   const products = [
     { id: 1, name: "Niagara Fall's Tours", time: "5 hours", price: 79.99 },
     { id: 2, name: "Sain Jhon Tours", time: "3 hours", price: 50.0 },
     { id: 3, name: "Jet Boat Ride ", time: "30 Minutes", price: 39.99 },
   ];
 
-  const cart = [];
-  let allPrices = [];
+  let cartProducts = [];
+  let checkoutPricing = [];
+
+  cartProducts = JSON.parse(localStorage.getItem("localCart")) || [];
+  checkoutPricing = JSON.parse(localStorage.getItem("localTotalPrice")) || [];
+  if (cartProducts.length === 0) {
+    emptyCart.classList.remove("hidden");
+    checkout.innerHTML = "";
+  } else {
+    emptyCart.classList.add("hidden");
+  }
+  renderCart();
 
   function showProducts() {
     if (!products || products.length === 0) return;
@@ -38,11 +47,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function addToCart(product) {
     emptyCart.classList.add("hidden");
-    cart.push(product);
+    cartProducts.push(product);
+    localStorage.setItem("localCart", JSON.stringify(cartProducts));
+    cartProducts = JSON.parse(localStorage.getItem("localCart"));
 
     // add pricing
     const price = product.price.toFixed(2);
-    allPrices.push(price);
+    checkoutPricing.push(price);
+    localStorage.setItem("localTotalPrice", JSON.stringify(checkoutPricing));
+    checkoutPricing = JSON.parse(localStorage.getItem("localTotalPrice"));
 
     // render cart
     renderCart();
@@ -53,7 +66,7 @@ document.addEventListener("DOMContentLoaded", () => {
     checkout.classList.remove("hidden");
     checkout.innerHTML = "";
 
-    cart.forEach((product, index) => {
+    cartProducts.forEach((product, index) => {
       const cartItem = document.createElement("div");
       cartItem.classList.add("cart-item");
       cartItem.innerHTML = `<span class="cart-item-title">${product.name}</span>
@@ -63,8 +76,8 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     let totalPrice = 0;
-    for (let index = 0; index < allPrices.length; index++) {
-      const price = allPrices[index];
+    for (let index = 0; index < checkoutPricing.length; index++) {
+      const price = checkoutPricing[index];
       totalPrice += Number(price);
     }
 
@@ -77,11 +90,13 @@ document.addEventListener("DOMContentLoaded", () => {
   cartList.addEventListener("click", (e) => {
     if (e.target.tagName === "BUTTON") {
       const index = parseInt(e.target.dataset.index);
-      cart.splice(index, 1);
-      allPrices.splice(index, 1);
+      cartProducts.splice(index, 1);
+      checkoutPricing.splice(index, 1);
+      localStorage.setItem("localCart", JSON.stringify(cartProducts));
+      localStorage.setItem("localTotalPrice", JSON.stringify(checkoutPricing));
       renderCart();
 
-      if (cart.length === 0) {
+      if (cartProducts.length === 0) {
         emptyCart.classList.remove("hidden");
         checkout.innerHTML = "";
       }
