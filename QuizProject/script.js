@@ -52,13 +52,18 @@ document.addEventListener("DOMContentLoaded", () => {
       showChoice.classList.add("btn");
       showChoice.textContent = c;
       choiceContainer.appendChild(showChoice);
-      showChoice.addEventListener("click", () => selectAnswer(c));
+      showChoice.addEventListener("click", () => selectAnswer(c, showChoice));
     });
   }
 
-  function selectAnswer(c) {
+  function selectAnswer(c, showChoice) {
+    const allchoices = document.querySelectorAll("button.btn");
+    allchoices.forEach((choice) => {
+      choice.classList.remove("active");
+    });
+    showChoice.classList.add("active");
     const correctAnswer = Questions[currentIndex].answer;
-    if (correctAnswer === c) {
+    if (c === correctAnswer) {
       score++;
     }
     nextQuestionBtn.classList.remove("hide");
