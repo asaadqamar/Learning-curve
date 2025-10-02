@@ -1,13 +1,22 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import Youtube from "./Youtube";
 
-function App() {
-  const [count, setCount] = useState(0);
+const imgElement = React.createElement(
+  "a",
+  {
+    href: "./image.jpg",
+    target: "_blank",
+  },
+  "Click here"
+);
 
+function App() {
   return (
     <>
       <h1>hello</h1>
       <Youtube />
+      {imgElement}
+      <p>hii</p>
     </>
   );
 }
