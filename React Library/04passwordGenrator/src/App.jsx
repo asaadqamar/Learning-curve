@@ -1,10 +1,38 @@
 import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
+import { useCallback, useEffect, useRef } from "react";
 import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [Length, isLength] = useState(8);
+  const [char, isChar] = useState(false);
+  const [number, isNumber] = useState(false);
+  const [password, crntPassword] = useState("");
+
+  const genratePass = useCallback(() => {
+    let pass = "";
+    let string = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+    if (char) string += "!@#$%^&*()_+";
+    if (number) string += "0123456789";
+
+    for (let i = 1; i < Length; i++) {
+      const randomNumber = Math.floor(Math.random() * string.length + 1);
+      pass += string.charAt(randomNumber);
+    }
+
+    crntPassword(pass);
+  }, [Length, char, number]);
+
+  useEffect(() => {
+    genratePass();
+  }, [Length, char, number]);
+
+  const passRef = useRef(null);
+
+  const copyPassword = () => {
+    window.navigator.clipboard.writeText(password);
+    passRef.current.select();
+  };
 
   return (
     <>
@@ -17,10 +45,13 @@ function App() {
               type="text"
               name="password"
               id="password"
+              value={password}
+              ref={passRef}
               readOnly
             />
             <button
               className="bg-blue-800 text-white p-2 rounded-r-md cursor-pointer"
+              onClick={copyPassword}
               type="button"
             >
               Copy
@@ -29,21 +60,45 @@ function App() {
           <div className="flex gap-5">
             <div className="flex">
               <label className="p-2" htmlFor="range">
-                Length
+                Length: {Length}
               </label>
-              <input type="range" name="range" id="range" min="8" max="20" />
+              <input
+                type="range"
+                min="8"
+                max="20"
+                value={Length}
+                onChange={(e) => isLength(e.target.value)}
+                name="range"
+                id="range"
+              />
             </div>
             <div className="flex">
               <label className="p-2" htmlFor="number">
                 Number
               </label>
-              <input type="checkbox" name="number" id="number" />
+              <input
+                type="checkbox"
+                defaultChecked={number}
+                onChange={() => {
+                  isNumber((prev) => !prev);
+                }}
+                name="number"
+                id="number"
+              />
             </div>
             <div className="flex">
               <label className="p-2" htmlFor="char">
                 Special Charater
               </label>
-              <input type="checkbox" name="char" id="char" />
+              <input
+                type="checkbox"
+                defaultChecked={char}
+                onChange={() => {
+                  isChar((last) => !last);
+                }}
+                name="char"
+                id="char"
+              />
             </div>
           </div>
         </div>
