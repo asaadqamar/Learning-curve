@@ -9,7 +9,7 @@ function GitHub() {
       .then((resp) => resp.json())
       .then((data) => {
         setData(data);
-        console.log(data);
+        console.log(typeof data);
       });
   }, []);
   return (
