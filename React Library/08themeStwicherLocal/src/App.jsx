@@ -1,15 +1,35 @@
 import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
 import "./App.css";
+import Card from "./component/Card";
+import ThemeBtn from "./component/ThemeBtn";
+import { ThemeProvider } from "./contexts/theme";
+import { useEffect } from "react";
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [themeMode, setthemeMode] = useState("light");
+
+  const darkTheme = () => {
+    setthemeMode("dark");
+  };
+
+  const lightTheme = () => {
+    setthemeMode("light");
+  };
+
+  useEffect(() => {
+    document.querySelector("html").classList.remove("dark", "light");
+    document.querySelector("html").classList.add(themeMode);
+  }, [themeMode]);
 
   return (
-    <>
-      <h1 className="text-3xl bg-black text-white">test</h1>
-    </>
+    <ThemeProvider value={{ themeMode, darkTheme, lightTheme }}>
+      <div className="flex flex-warp justify-center items-center h-screen">
+        <div className="w-2xl">
+          <ThemeBtn />
+          <Card />
+        </div>
+      </div>
+    </ThemeProvider>
   );
 }
 
